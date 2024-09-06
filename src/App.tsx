@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
+import { Button } from './components/button/Button';
+import { Board } from './components/board/Board';
+
 function App() {
+  const initialValue = 0;
+  const maxValue = 5;
+
+  const [counter, setCounter] = useState<number>(initialValue);
+
+  const incHandler = () => {
+    if (counter < maxValue) {
+      setCounter(prevCount => prevCount + 1);
+    }
+  };
+
+  const decrHandler = () => setCounter(initialValue);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <Board counter={counter} maxValue={maxValue} />
+
+      <div className='ButtonContainer'>
+        <Button onClick={incHandler} disabled={counter === maxValue}>Inc</Button>
+        <Button onClick={decrHandler} disabled={counter === initialValue}>Decr</Button>
+      </div>
+
     </div>
   );
 }

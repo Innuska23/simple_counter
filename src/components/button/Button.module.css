@@ -1,0 +1,15 @@
+.button {
+  width: 100px;
+  height: 30px;
+  font-weight: bold;
+  background-color: white;
+  border: 3px solid darkgray;
+  border-radius: 5px;
+  cursor: pointer;
+  scale: 1;
+  transition: 1s all ease-out;
+}
+
+.button:hover {
+  scale: 1.1;
+}
