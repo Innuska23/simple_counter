@@ -1,31 +1,37 @@
-import { useState } from 'react';
 import './App.css';
 
 import { Button } from './components/button/Button';
 import { Board } from './components/board/Board';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from './bll/store';
+import { decCounterValueAC, incCounterValueAC } from './bll/counter-reduce';
+
 
 function App() {
-  const initialValue = 0;
+
+  const initialValue = useSelector<AppStateType, number>(state => state.counter.value)
   const maxValue = 5;
 
-  const [counter, setCounter] = useState<number>(initialValue);
+  const dispatch = useDispatch()
 
   const incHandler = () => {
-    if (counter < maxValue) {
-      setCounter(prevCount => prevCount + 1);
+    if (initialValue < maxValue) {
+      dispatch(incCounterValueAC())
     }
   };
 
-  const decrHandler = () => setCounter(initialValue);
+  const decrHandler = () => {
+    dispatch(decCounterValueAC())
+  }
 
   return (
     <div className="App">
 
-      <Board counter={counter} maxValue={maxValue} />
+      <Board counter={initialValue} maxValue={maxValue} />
 
       <div className='ButtonContainer'>
-        <Button onClick={incHandler} disabled={counter === maxValue}>Inc</Button>
-        <Button onClick={decrHandler} disabled={counter === initialValue}>Decr</Button>
+        <Button onClick={incHandler} disabled={initialValue === maxValue}>Inc</Button>
+        <Button onClick={decrHandler} disabled={initialValue === 0}>Decr</Button>
       </div>
 
     </div>
